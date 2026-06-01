@@ -82,22 +82,16 @@ st.markdown(
 
 @st.cache_resource
 def load_models():
+    try:
+        rnn = tf.keras.models.load_model("simple_rnn_model.keras")
+        lstm = tf.keras.models.load_model("lstm_model.keras")
+        gru = tf.keras.models.load_model("gru_model.keras")
 
-    rnn = tf.keras.models.load_model(
-        "simple_rnn_model.keras"
-    )
+        return rnn, lstm, gru
 
-    lstm = tf.keras.models.load_model(
-        "lstm_model.keras"
-    )
-
-    gru = tf.keras.models.load_model(
-        "gru_model.keras"
-    )
-
-    return rnn, lstm, gru
-
-model_rnn, model_lstm, model_gru = load_models()
+    except Exception as e:
+        st.error(str(e))
+        raise e
 
 # ==========================================
 # WORD INDEX
